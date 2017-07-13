@@ -34,4 +34,15 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_equal name, @user.name
     assert_equal email, @user.email
   end
+
+  test "edit only activated user" do
+    get user_path(@user)
+    assert_template 'users/show'
+    assert_select 'h1', 'Michael Example'
+    # deactivate
+    @user.update_attribute(:activated, false)
+    assert_not @user.activated?
+    get user_path(@user)
+    assert_select 'h1', count: 0
+  end
 end
