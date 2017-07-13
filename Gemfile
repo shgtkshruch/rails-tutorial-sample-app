@@ -33,7 +33,7 @@ gem 'bcrypt', '3.1.11'
 # create fake users
 gem 'faker', '1.7.3'
 # pagination
-gem 'will_paginate', '3.1.5'
+gem 'will_paginate', '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
 
 # Use Capistrano for deployment
