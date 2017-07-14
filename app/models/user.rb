@@ -59,8 +59,14 @@ class User < ApplicationRecord
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
+  # パスワード再設定用のメールを送信する
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  # パスワード再設定の期限が切れている場合はtrueを返す
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   private
