@@ -50,12 +50,15 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert is_logged_in?
     assert_not flash.empty?
     assert_redirected_to user
+    # reset_digestが削除されていることの確認
+    assert_nil @user.reload.reset_digest
   end
 
   test "expired token" do
     get new_password_reset_path
     post password_resets_path,
       params: { password_reset: { email: @user.email } }
+
     @user = assigns(:user)
     @user.update_attribute(:reset_sent_at, 3.hours.ago)
     patch password_reset_path(@user.reset_token),
